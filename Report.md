@@ -7,24 +7,23 @@ To evaluate the impact of hot water consumption on the overall ecological footpr
 - Total electricity consumption per room: same approach can be used, as when calculating the water consumption. According to the white paper funded by The Energy Foundation [1] U.S. national water-related energy use accounts for 13% of the nation’s electricity consumption, which corresponds to 5% of their carbon emissions. When considering a residential (or if we want to be more precise, hospitality) sector, a more fitting coefficient should be defined to identify the share of the electricity consumption used for water heating alone.  However, this component will have an additional complexity depending on the primary energy source used by the establishment. Depending on the heating technology and the energy resource the related carbon emissions might vary (https://www.iea.org/reports/heating).
 These are the main components, which seem appropriate for such a calculation model. Nevertheless, it can be expanded when taking into the account wether the hotel (rather more applicable for hotel chains, perhaps) utilises any low impact water related development schemes, for instance water conservation and water and energy efficiency practices. Also the building construction and the technology used alongside with the renovation performed in a timely manner has a considerable impact on the water and energy efficiency.
 
+
 ## Dataset
-*These datasets are just an example data*
-1. UN World Tourism Organisation provides some basic tourism statistics: https://www.unwto.org/statistic/basic-tourism-statistics
+1. Hotel capacity and occupancy rates
+UN World Tourism Organisation provides some basic tourism statistics: https://www.unwto.org/statistic/basic-tourism-statistics
 For example, from the `TOURISM INDUSTRIES` section we can download relevant indicators for accommodation for visitors in hotels and similar establishments in `.xlsx` format.  Indicators include values per country on number of establishments, number of rooms, number of bed-places, occupancy rates and average length of stay for the years 1995-2019.
-The file can be easily converted to `.csv` format with the use of gnumeric tools: `ssconvert `
-With the help of tsv-utils by running `csv2tsv` command,  and select the relevant indicators by running `tsv-select -f 4,6,11-35 file.tsv > newfile.tsv`
-Both `.csv` and `.tsv` formats can be used to generate a nested .json structure in an example format:
-```
-[{"country": X,
-  {"year": Y,
-   ""}
-  }
-]
-```
+The file can be easily converted to `.csv` format with the use of gnumeric tools: `ssconvert unwto-tourism-industries-data.xlsx unwto-tourism-industries-data.csv`.
+With the help of [tsv-utils](https://github.com/eBay/tsv-utils) by running `csv2tsv` command, `.csv` can be easily converted to `.tsv`. `TSV` file can be later on manipulated to create a suitable dataset format. For example, we can select the relevant indicators by running `tsv-select -f 4,6,11-35 unwto-tourism-industries-data.tsv > unwto-tourism-industries-data-formatted.tsv`. Both `.csv` and `.tsv` formats can be used as a machine-readable input to be later on converted into a `.json` structure of your choice, which is commonly used for transmitting data in web applications.
+
+2. Water and electricity consumption
+When in comes to finding data resources for water and electricity consumption in hotels, I would first browse through their environmental reports to scan for relevant data. However, even in bigger hotel chains while the financial reports are usually publicly available, there are currently no strict requirements to disclouse environmental data in hospitality industry [4]. The ways to approach this issue, I would suggest to first of all, reach out to bigger hotel chains and request the data from them, if available and they are ready to share. Otherwise, we can utilize the residential sector data in a respective country and approximate that the water and energy consumtion along with the corresponding GHG emissions shall be somewhat similar for those two sectors. Databases such as [eurostat](https://ec.europa.eu/eurostat/data/database) contain comprehensive tables on environment and energy indicators in `.tsv` format.
+
 
 ### Useful references
 [1] *Bevan Griffiths-Sattenspiel and Wendy Wilson*. **The Carbon Footprint of Water**, 2009. https://www.csu.edu/cerc/researchreports/documents/CarbonFootprintofWater-RiverNetwork-2009.pdf
 
 [2] *Francisco Javier Díaz Pérez, Ricardo Díaz Martín, Francisco Javier Pérez Trujillo, Moises Díaz and Adib Guardiola Mouhaffel*. **Consumption and Emissions Analysis in Domestic Hot Water Hotels. Case Study: Canary Islands**, Sustainability 2019, 11, 599. DOI: https://doi.org/10.3390/su11030599
 
-[3] *Hery Tiana Rakotondramiarana, Mamy Harimisa Radanielina and Andriamaholisoa Yvan Ramananjatovo*. **Techno-Economic Investigation of a Thermal Cure Center Excess Heat Recovery System for Producing Hot Water for a Hotel in Antsirabe Madagascar**, Journal of Technology Innovations in Renewable Energy, 2015, 4, 10-20. DOI: http://dx.doi.org/10.6000/1929-6002.2015.04.01.2 
+[3] *Hery Tiana Rakotondramiarana, Mamy Harimisa Radanielina and Andriamaholisoa Yvan Ramananjatovo*. **Techno-Economic Investigation of a Thermal Cure Center Excess Heat Recovery System for Producing Hot Water for a Hotel in Antsirabe Madagascar**, Journal of Technology Innovations in Renewable Energy, 2015, 4, 10-20. DOI: http://dx.doi.org/10.6000/1929-6002.2015.04.01.2
+
+[4] *Patricia Milanés-Montero, Chris Stone, Esteban Pérez-Calderón*. **Environmental Reporting in the Hospitality Industry: An International Analysis**, Environmental Engineering and Management Journal, 2014, 13(10):2531-2540. DOI: https://doi.org/10.30638/eemj.2014.283
